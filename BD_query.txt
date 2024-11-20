@@ -1,0 +1,33 @@
+-- Consulta 1
+SELECT dl.genero, dt.mes, SUM(hv.precio_total) AS total_ventas
+FROM hechos_ventas_libros hv
+JOIN dim_libro dl ON hv.id_libro = dl.id_libro
+JOIN dim_tiempo dt ON hv.id_tiempo = dt.id_tiempo
+GROUP BY dl.genero, dt.mes
+ORDER BY dl.genero, dt.mes;
+
+-- Consulta 2
+SELECT dt.nombre_tienda, dl.autor, SUM(hv.cantidad) AS total_libros_vendidos
+FROM hechos_ventas_libros hv
+JOIN dim_libro dl ON hv.id_libro = dl.id_libro
+JOIN dim_tienda dt ON hv.id_tienda = dt.id_tienda
+GROUP BY dt.nombre_tienda, dl.autor
+ORDER BY dt.nombre_tienda, dl.autor;
+
+-- Consulta 3
+SELECT dc.ciudad AS ciudad_cliente, dt.trimestre, SUM(hv.precio_total) AS ingresos_totales
+FROM hechos_ventas_libros hv
+JOIN dim_cliente dc ON hv.id_cliente = dc.id_cliente
+JOIN dim_tiempo dt ON hv.id_tiempo = dt.id_tiempo
+GROUP BY dc.ciudad, dt.trimestre
+ORDER BY dc.ciudad, dt.trimestre;
+
+-- Consulta 4
+SELECT dc.nombre_cliente, SUM(hv.precio_total) AS total_ventas_cliente, SUM(hv.cantidad) AS total_libros_comprados
+FROM hechos_ventas_libros hv
+JOIN dim_cliente dc ON hv.id_cliente = dc.id_cliente
+GROUP BY dc.nombre_cliente
+ORDER BY total_ventas_cliente DESC;
+
+
+
